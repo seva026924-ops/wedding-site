@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Свадьба Кирилла и Александры</title>
+    <link rel="stylesheet" href="style.css"
+
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<div id="main-screen" class="screen main-screen">
+    <div class="envelope">
+        <div class="seal">К & А</div>
+    </div>
+    <button id="open-invite" class="btn-open">Открыть приглашение</button>
+</div>
+
+<audio id="wedding-music" src="music.mp3"></audio>
+
+<div id="content-wrapper" class="hidden">
+    
+ <div class="photo-bg" style="background-image: url('C:\Users\Саша\OneDrive\Рабочий стол\wedding\main-bg.jpg');"></div>
+
+
+
+    <section class="story-section">
+    <div class="container">
+        <!-- Блок с фото -->
+        <div class="children-photos">
+            <img src="child1.jpg" alt="Мальчик">
+            <img src="child2.jpg" alt="Девочка">
+        </div>
+        
+        <!-- Блок с текстом -->
+        <div class="children-story">
+            <h2>Когда-то мы были просто детьми...</h2>
+            <p>
+                Иногда судьбе требуется время, чтобы соединить сердца.<br>
+                И вот сегодня мы начинаем новую главу нашей жизни.<br>
+                Мы очень хотим, чтобы именно вы были рядом в этот день.
+            </p>
+        </div>
+    </div>
+</section>
+
+    
+    <section class="timer-section">
+        <div class="container">
+            <h2>До нашего дня осталось:</h2>
+            <div id="countdown" class="countdown">
+                <div><span id="days">--</span> Дней</div>
+                <div><span id="hours">--</span> Часов</div>
+                <div><span id="minutes">--</span> Минут</div>
+                <div><span id="seconds">--</span> Секунд</div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="calendar-section">
+        <div class="container">
+            <i class="fa-solid fa-calendar-days icon-gold"></i>
+            <h2>Сохраните эту дату ❤️</h2>
+            <div class="date-box">19 сентября 2026</div>
+            <a href="#" class="btn-add-calendar">Добавить в календарь</a>
+<div class="photos-grid couple-photos">
+      <img src="couple1.jpg" alt="Мы вместе">
+      <img src="couple2.jpg" alt="Свадьба">
+  </div>
+
+        </div>
+    </section>
+
+
+    <section class="program-section">
+        <div class="gold-line"></div>
+        <div class="container">
+            <div class="event-item">
+                <i class="fa-solid fa-rings-wedding icon-event"></i>
+                <h3>14:00 — Регистрация</h3>
+                <p>Наша регистрация пройдет в залах ЗАГСа по адресу пр-кт. Московский д.38/5</p>
+            </div>
+            <div class="event-item">
+                <i class="fa-solid fa-martini-glass-citrus icon-event"></i>
+                <h3>14:30 — Фуршет</h3>
+                <p>Время пролетит незаметно за фуршетом и общением с другими гостями.</p>
+            </div>
+            <div class="event-item">
+                <i class="fa-solid fa-camera icon-event"></i>
+                <h3>15:00 — Фотосессия</h3>
+                <p>До банкета у вас будет время узнать друг друга поближе и сфотографироваться.</p>
+            </div>
+            <div class="event-item">
+                <i class="fa-solid fa-wine-glass-empty icon-event"></i>
+                <h3>17:00 — Банкет</h3>
+                <p>Праздничный банкет в зале «Мелодия» по адресу Ярославская ул.29</p>
+            </div>
+            <div class="event-item">
+                <i class="fa-solid fa-moon icon-event"></i>
+                <h3>22:00 — Завершение вечера</h3>
+                <p>Даже такой день может когда то подойти к концу.</p>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="map-section">
+        <div class="container">
+            <div id="map"></div>
+            <div class="route-buttons">
+                <button onclick="calcRoute('ЗАГС')" class="btn-route">Маршрут до ЗАГСа</button>
+                <button onclick="calcRoute('Банкет')" class="btn-route">Маршрут до банкета</button>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="gifts-section">
+        <div class="card-white">
+            <h2>О подарках</h2>
+            <p>Самым главным подарком для нас станет ваше присутствие в этот день.</p>
+            <p>Если вы захотите сделать нам подарок, мы будем благодарны за вклад в нашу будущую семью в денежном эквиваленте.</p>
+            <p class="no-flowers">Мы понимаем, что цветы являются прекрасной традицией, однако не сможем долго наслаждаться их красотой. Поэтому будем рады любой другой альтернативе вместо букета.</p>
+        </div>
+    </section>
+
+    
+    <section class="rsvp-section">
+        <div class="container">
+            <h2>Подтвердите свое присутствие</h2>
+            <form id="rsvp-form">
+                <input type="text" placeholder="Ваше имя" required>
+                <select id="attendance" required>
+                    <option value="" disabled selected>Будете присутствовать?</option>
+                    <option value="yes">Да, обязательно!</option>
+                    <option value="maybe">Возможно</option>
+                    <option value="no">Не смогу прийти</option>
+                </select>
+                <select id="transfer">
+                    <option value="" disabled selected>Нужен ли трансфер?</option>
+                    <option value="yes">Да</option>
+                    <option value="no">Нет</option>
+                </select>
+                <select id="children">
+                    <option value="" disabled selected>Будет ли ребенок?</option>
+                    <option value="yes">Да</option>
+                    <option value="no">Нет</option>
+                </select>
+                <select id="allergy">
+                    <option value="" disabled selected>Есть ли аллергии / предпочтения в еде?</option>
+                    <option value="none">Нет</option>
+                    <option value="nuts">Орехи</option>
+                    <option value="gluten">Глютен</option>
+                    <option value="lactose">Лактоза</option>
+                    <option value="other">Другое (напишу ниже)</option>
+                </select>
+                <select id="alcohol">
+                    <option value="" disabled selected>Какой алкоголь предпочитаете?</option>
+                    <option value="red_wine">Красное вино</option>
+                    <option value="white_wine">Белое вино</option>
+                    <option value="champagne">Шампанское</option>
+                    <option value="strong">Крепкий алкоголь</option>
+                    <option value="soft">Безалкогольные напитки</option>
+                </select>
+                <textarea placeholder="Ваши пожелания или комментарии"></textarea>
+                <button type="submit" class="btn-send">❤️ Отправить</button>
+            </form>
+        </div>
+    </section>
+</div>
+
+<script src="script.js"></script>
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+</body>
+</html>
