@@ -1,14 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    
-    const rsvpForm = document.getElementById('rsvp-form'); 
-
-    
+    const rsvpForm = document.getElementById('rsvp-form');
     const envelope = document.querySelector('.envelope');
     const seal = document.querySelector('.seal');
     const openBtn = document.getElementById('open-invite');
     const music = document.getElementById('wedding-music');
     const wrapper = document.getElementById('content-wrapper');
-    const mainScreen = document.getElementById('main-screen');
+    const mainScreen = document.getElementById('main-screen'); // Исправлена ошибка с getDocument]
 
     function openEnvelope() {
         gsap.to(seal, {scale: 0.1, y: -100, opacity: 0, duration: 1});
@@ -22,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     [envelope, openBtn].forEach(el => el.addEventListener('click', openEnvelope));
 
-    
     const countDownDate = new Date("September 19, 2026 17:00:00").getTime();
     
     setInterval(function() {
@@ -40,13 +36,11 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
     }, 1000);
 
-    
     document.querySelector('.btn-add-calendar').addEventListener('click', function(e){
         e.preventDefault();
         alert('Чтобы добавить событие:\n1. Откройте Google Календарь\n2. Нажмите "Создать"\n3. Введите: Свадьба Кирилла и Александры, 19.09.2026');
     });
 
-    
     function animateOnScroll() {
         const items = document.querySelectorAll('.event-item');
         items.forEach(item => {
@@ -57,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     window.addEventListener('scroll', animateOnScroll);
 
-    
     let map;
     ymaps.ready(init);
     function init(){
@@ -66,13 +59,11 @@ document.addEventListener('DOMContentLoaded', function() {
             zoom: 13
         });
         
-        
         const placemarkZAGS = new ymaps.Placemark([56.146289, 47.216639], {
             balloonContentHeader: 'ЗАГС',
             balloonContentBody: 'пр-кт. Московский д.38/5'
         });
 
-        
         const placemarkBanquet = new ymaps.Placemark([56.141893, 47.253355], {
             balloonContentHeader: 'Банкетный зал "Мелодия"',
             balloonContentBody: 'Ярославская ул., 29'
@@ -92,17 +83,16 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = `yandexnavi://build_route_on_map?lat_to=56.1365&lon_to=47.2395&name_to=${destination}`;
     }
 
-    
     function showThankYou() {
         const modal = document.createElement('div');
         modal.className = 'thank-you-modal';
         modal.innerHTML = `
-            <div class="modal-content">
-                <i class="fa-solid fa-heart"></i>
-                <h2>Спасибо!</h2>
-                <p>До встречи<br>19 сентября 2026 ❤️</p>
-            </div>
-        `;
+          <div class="modal-content">
+              <i class="fa-solid fa-heart"></i>
+              <h2>Спасибо!</h2>
+              <p>До встречи<br>19 сентября 2026 ❤️</p>
+          </div>
+      `;
         document.body.appendChild(modal);
         setTimeout(() => modal.classList.add('active'), 100);
         setTimeout(() => {
@@ -111,7 +101,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 
-    
     rsvpForm.addEventListener('submit', async function(event) {
       event.preventDefault();
       
@@ -130,9 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
       try {
         
         const proxyUrl = "https://api.allorigins.win/get?url="; 
-        
         const encodedUrl = encodeURIComponent(
-          
           'https://script.google.com/macros/s/AKfycbzmFp7MQ8hVn0h-o4l8XUtfOHFGKM0dC83brpmW3tP6qklqH9sjleCaLEclHkEbNT7X/exec'
         );
 
