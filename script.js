@@ -110,25 +110,29 @@ document.addEventListener('DOMContentLoaded', function() {
         comment: formData.get('comment')
     };
 
-    try {
-      // Используем альтернативный бесплатный прокси-сервер allorigins.win
-      'https://script.google.com/macros/s/AKfycbzmFp7MQ8hVn0h-o4l8XUtfOHFGKM0dC83brpmW3tP6qklqH9sjleCaLEclHkEbNT7X/exec'
-      const proxyUrl = "https://api.allorigins.win/get?url="; 
-      const encodedUrl = encodeURIComponent('ВАШ_РЕАЛЬНЫЙ_URL_EXEC');
+   try {
+  // Используем альтернативный бесплатный прокси-сервис allorigins.win
+  const proxyUrl = "https://api.allorigins.win/get?url=";
+  
+  // ВАЖНО: вставьте сюда свой РЕАЛЬНЫЙ URL из Apps Script!
+  // НЕ используйте одинарные или двойные кавычки вокруг адреса!
+  const encodedUrl = encodeURIComponent(
+    'https://script.google.com/macros/s/AKfycbzmFp7MQ8hVn0h-o4l8XUtfOHFGKM0dC83brpmW3tP6qklqH9sjleCaLEclHkEbNT7X/exec'
+  );
 
-      const response = await fetch(proxyUrl + encodedUrl, {
-          method: 'POST',
-          body: JSON.stringify(dataToSend),
-          headers: {'Content-Type': 'application/json'}
-      });
+  const response = await fetch(proxyUrl + encodedUrl, {
+      method: 'POST',
+      body: JSON.stringify(dataToSend),
+      headers: {'Content-Type': 'application/json'}
+  });
 
-      if (!response.ok) throw new Error(`Ошибка при отправке данных: ${await response.text()}`);
+  if (!response.ok) throw new Error(`Ошибка при отправке данных: ${await response.text()}`);
 
-      showThankYou(); // Показываем спасибо-экран после успешной отправки
-    } catch (error) {
-      alert('Произошла ошибка при отправке данных.');
-      console.error(error.message);
-    }
+  showThankYou(); // Показываем спасибо-экран после успешной отправки
+} catch (error) {
+  alert('Произошла ошибка при отправке данных.');
+  console.error(error.message);
+}
   });
 
   // Функция благодарности должна быть объявлена до того,
