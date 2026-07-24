@@ -65,13 +65,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Метка ЗАГСа
-        const placemarkZAGS = new ymaps.Placemark([56.1365, 47.2395], {
+        const placemarkZAGS = new ymaps.Placemark([56.146289, 47.216639], {
             balloonContentHeader: 'ЗАГС',
             balloonContentBody: 'пр-кт. Московский д.38/5'
         });
 
         // Метка Банкета
-        const placemarkBanquet = new ymaps.Placemark([56.1450, 47.2450], { // Координаты Ярославской 29 примерные
+        const placemarkBanquet = new ymaps.Placemark([56.141893, 47.253355], { // Координаты Ярославской 29 примерные
             balloonContentHeader: 'Банкетный зал "Мелодия"',
             balloonContentBody: 'Ярославская ул., 29'
         });
