@@ -92,38 +92,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // === RSVP ФОРМА ===
-   const rsvpForm = document.getElementById('rsvp-form');
-rsvpForm.addEventListener('submit', async function(event) {
+   rsvpForm.addEventListener('submit', async function(event) {
     event.preventDefault(); // Отменяем стандартную отправку формы
 
-    const formData = new FormData(rsvpForm); // Собираем все поля формы
+    const formData = new FormData(rsvpForm); 
     
     // Формируем объект данных для передачи
     const dataToSend = {
         name: formData.get('name'),          // Имя гостя
-        attendance: formData.get('attendance'),// Будет присутствовать?
-        transfer: formData.get('transfer'),   // Нужен ли трансфер?
-        children: formData.get('children'),    // Будет ли ребенок?
-        allergy: formData.get('allergy'),     // Аллергии / предпочтения в еде
-        alcohol: formData.get('alcohol'),     // Какой алкоголь предпочитаете?
-        comment: formData.get('comment')      // Комментарий
+        attendance: formData.get('attendance'),
+        transfer: formData.get('transfer'),   
+        children: formData.get('children'),    
+        allergy: formData.get('allergy'),     
+        alcohol: formData.get('alcohol'),     
+        comment: formData.get('comment')      
     };
 
     try {
-        // Отправляем данные по адресу веб-приложения Apps Script
-       ```javascript
-    // Используем бесплатный прокси-сервис для обхода CORS
-    const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-    
-    const response = await fetch(proxyUrl + 'https://script.google.com/macros/s/AKfycbzmFp7MQ8hVn0h-o4l8XUtfOHFGKM0dC83brpmW3tP6qklqH9sjleCaLEclHkEbNT7X/exec', {
-      method: 'POST',
-      body: JSON.stringify(dataToSend),
-      headers: {'Content-Type': 'application/json'}
-    });
-    ```
-            { method: 'POST', body: JSON.stringify(dataToSend), headers: {'Content-Type': 'application/json'} }
-        );
+        // === ВНИМАНИЕ! Оставьте ТОЛЬКО этот блок === //
         
+        // Используем альтернативный бесплатный прокси-сервер allorigins.win
+        const proxyUrl = "https://api.allorigins.win/get?url="; // Прокси-ссылка
+        const encodedUrl = encodeURIComponent('https://script.google.com/macros/s/AKfycbzmFp7MQ8hVn0h-o4l8XUtfOHFGKM0dC83brpmW3tP6qklqH9sjleCaLEclHkEbNT7X/exec'); // ВАЖНО: вставьте сюда свой реальный URL из Apps Script!
+
+        const response = await fetch(proxyUrl + encodedUrl, {
+            method: 'POST',
+            body: JSON.stringify(dataToSend),
+            headers: {'Content-Type': 'application/json'}
+        });
+
         if (!response.ok) throw new Error(`Ошибка при отправке данных: ${await response.text()}`);
 
         showThankYou(); // Показываем спасибо-экран после успешной отправки
