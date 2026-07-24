@@ -131,22 +131,22 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
     function showThankYou() {
-        const modal = document.createElement('div');
-        modal.className = 'thank-you-modal';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <i class="fa-solid fa-heart"></i>
-                <h2>Спасибо!</h2>
-                <p>До встречи<br>19 сентября 2026 ❤️</p>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        setTimeout(() => modal.classList.add('active'), 100);
-        setTimeout(() => {
-            modal.classList.remove('active');
-            setTimeout(() => modal.remove(), 400);
-        }, 3000);
-    }
+    const modal = document.createElement('div');
+    modal.className = 'thank-you-modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <i class="fa-solid fa-heart"></i>
+            <h2>Спасибо!</h2>
+            <p>До встречи<br>19 сентября 2026 ❤️</p>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    setTimeout(() => modal.classList.add('active'), 100); // Плавное появление
+    setTimeout(() => { // Через 3 секунды плавно скрываем окно
+        modal.classList.remove('active');
+        setTimeout(() => modal.remove(), 400); // И удаляем его через полсекунды после исчезновения
+    }, 3000);
+}
 
     // GSAP нужен для красивой анимации конверта. Подключите его в head:
     // <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
