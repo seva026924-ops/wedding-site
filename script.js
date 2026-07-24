@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+
     // === ОТКРЫТИЕ КОНВЕРТА ===
     const envelope = document.querySelector('.envelope');
     const seal = document.querySelector('.seal');
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mainScreen.classList.add('hidden');
             wrapper.classList.remove('hidden');
             music.play();
-            animateOnScroll(); 
+            animateOnScroll(); // Запускаем проверку видимости элементов
         }});
     }
 
@@ -70,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Метка Банкета
-        const placemarkBanquet = new ymaps.Placemark([56.141893, 47.253355], {
+        const placemarkBanquet = new ymaps.Placemark([56.141893, 47.253355], { // Координаты Ярославской 29 примерные
             balloonContentHeader: 'Банкетный зал "Мелодия"',
             balloonContentBody: 'Ярославская ул., 29'
         });
@@ -80,55 +81,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function calcRoute(type) {
-        let lat, lon;
-        
+        let destination;
         if (type === 'ЗАГС') {
-            [lat, lon] = [56.146289, 47.216639];
-        } else if (type === 'Банкет') {
-            [lat, lon] = [56.141893, 47.253355];
+            destination = 'Московский проспект, 38/5';
+        } else {
+            destination = 'Ярославская улица, 29';
         }
-
-        const url = `https://maps.yandex.ru/?ll=${lon},${lat}&z=16&pt=${lon},${lat}`;
-        window.location.href = url;
+        // Это откроет приложение карт пользователя
+        window.location.href = `yandexnavi://build_route_on_map?lat_to=56.1365&lon_to=47.2395&name_to=${destination}`;
     }
 
     // === RSVP ФОРМА ===
-    // Объявляем форму здесь!
-    const rsvpForm = document.getElementById('rsvp-form'); // <-- Добавил эту строку
-
-    rsvpForm.addEventListener('submit', async function(event) {
-        event.preventDefault(); // Отменяем стандартную отправку формы
-
-        const formData = new FormData(rsvpForm); // Собираем все поля формы
+    const rsvpForm = document.getElementById('rsvp-form');
+    rsvpForm.addEventListener('submit', function(e){
+        e.preventDefault();
         
-        // Формируем объект данных для передачи
-        const dataToSend = {
-            name: formData.get('name'),          // Имя гостя
-            attendance: formData.get('attendance'),// Будет присутствовать?
-            transfer: formData.get('transfer'),   // Нужен ли трансфер?
-            children: formData.get('children'),    // Будет ли ребенок?
-            allergy: formData.get('allergy'),     // Аллергии / предпочтения в еде
-            alcohol: formData.get('alcohol'),     // Какой алкоголь предпочитаете?
-            comment: formData.get('comment')      // Комментарий
-        };
-
-        try {
-            // Отправляем данные по адресу веб-приложения Apps Script
-            const response = await fetch(
-                'ВАШ_АДРЕС_EXEC', // Не забудь вставить свой URL из развёртывания Apps Script
-                { method: 'POST', body: JSON.stringify(dataToSend), headers: {'Content-Type': 'application/json'} }
-            );
-            
-            if (!response.ok) throw new Error(`Ошибка при отправке данных: ${await response.text()}`);
-
-            showThankYou(); // Показываем спасибо-экран после успешной отправки
-        } catch (error) {
-            alert('Произошла ошибка при отправке данных.');
-            console.error(error.message);
-        }
+        // Здесь можно отправить данные на почту или в Google Таблицы (через fetch/AJAX)
+        console.log('Данные отправлены:', Object.fromEntries(new FormData(rsvpForm)));
+        
+        // Показываем спасибо-экран
+        showThankYou();
     });
 
-    // Функция благодарности тоже должна быть здесь
     function showThankYou() {
         const modal = document.createElement('div');
         modal.className = 'thank-you-modal';
@@ -140,14 +114,13 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
         document.body.appendChild(modal);
-        setTimeout(() => modal.classList.add('active'), 100); // Плавное появление
-        setTimeout(() => { // Через 3 секунды плавно скрываем окно
+        setTimeout(() => modal.classList.add('active'), 100);
+        setTimeout(() => {
             modal.classList.remove('active');
-            setTimeout(() => modal.remove(), 400); // И удаляем его через полсекунды после исчезновения
+            setTimeout(() => modal.remove(), 400);
         }, 3000);
     }
 
     // GSAP нужен для красивой анимации конверта. Подключите его в head:
     // <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 });
-
