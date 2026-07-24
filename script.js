@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Объявляем форму ГЛОБАЛЬНО, чтобы к ней можно было обратиться из любого места кода
+    
     const rsvpForm = document.getElementById('rsvp-form'); 
 
-    // === ОТКРЫТИЕ КОНВЕРТА ===
+    
     const envelope = document.querySelector('.envelope');
     const seal = document.querySelector('.seal');
     const openBtn = document.getElementById('open-invite');
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     [envelope, openBtn].forEach(el => el.addEventListener('click', openEnvelope));
 
-    // === ТАЙМЕР ОБРАТНОГО ОТСЧЕТА ===
+    
     const countDownDate = new Date("September 19, 2026 17:00:00").getTime();
     
     setInterval(function() {
@@ -40,13 +40,13 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
     }, 1000);
 
-    // === КАЛЕНДАРЬ (упрощенный вариант без внешних либ) ===
+    
     document.querySelector('.btn-add-calendar').addEventListener('click', function(e){
         e.preventDefault();
         alert('Чтобы добавить событие:\n1. Откройте Google Календарь\n2. Нажмите "Создать"\n3. Введите: Свадьба Кирилла и Александры, 19.09.2026');
     });
 
-    // === ПРОГРАММА (АНИМАЦИЯ ПОЯВЛЕНИЯ) ===
+    
     function animateOnScroll() {
         const items = document.querySelectorAll('.event-item');
         items.forEach(item => {
@@ -57,22 +57,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     window.addEventListener('scroll', animateOnScroll);
 
-    // === ЯНДЕКС КАРТЫ ===
+    
     let map;
     ymaps.ready(init);
     function init(){
         map = new ymaps.Map("map", {
-            center: [56.1365, 47.2395], // Пример координат центра Чебоксар
+            center: [56.1365, 47.2395], 
             zoom: 13
         });
         
-        // Метка ЗАГСа
+        
         const placemarkZAGS = new ymaps.Placemark([56.146289, 47.216639], {
             balloonContentHeader: 'ЗАГС',
             balloonContentBody: 'пр-кт. Московский д.38/5'
         });
 
-        // Метка Банкета
+        
         const placemarkBanquet = new ymaps.Placemark([56.141893, 47.253355], {
             balloonContentHeader: 'Банкетный зал "Мелодия"',
             balloonContentBody: 'Ярославская ул., 29'
@@ -92,8 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = `yandexnavi://build_route_on_map?lat_to=56.1365&lon_to=47.2395&name_to=${destination}`;
     }
 
-    // Функция благодарности должна быть объявлена до того,
-    // как она вызывается внутри обработчика формы
+    
     function showThankYou() {
         const modal = document.createElement('div');
         modal.className = 'thank-you-modal';
@@ -112,14 +111,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 
-    // === RSVP ФОРМА — финальный блок отправки данных ===
-    // Мы уже объявили rsvpForm выше, теперь используем её здесь
+    
     rsvpForm.addEventListener('submit', async function(event) {
       event.preventDefault();
       
       const formData = new FormData(rsvpForm); 
       
-      // Формируем объект данных для передачи
       const dataToSend = {
           name: formData.get('name'),
           attendance: formData.get('attendance'),
@@ -131,12 +128,12 @@ document.addEventListener('DOMContentLoaded', function() {
       };
 
       try {
-        // Используем альтернативный бесплатный прокси-сервис allorigins.win
+        
         const proxyUrl = "https://api.allorigins.win/get?url="; 
-        // ВАЖНЫЙ МОМЕНТ: вставьте сюда свой РЕАЛЬНЫЙ URL из Apps Script!
+        
         const encodedUrl = encodeURIComponent(
-          /* ВАШ_АДРЕС_EXEC */
-          'https://script.google.com/macros/s/AKfycbzmFp7MQ8hVn0h-o4l8XUtfOHFGKM0dC83brpmW3tP6qklqH9sjleCaLEclHkEbNT7X/exec' // <-- Убедитесь, что это ваш адрес!
+          
+          'https://script.google.com/macros/s/AKfycbzmFp7MQ8hVn0h-o4l8XUtfOHFGKM0dC83brpmW3tP6qklqH9sjleCaLEclHkEbNT7X/exec'
         );
 
         const response = await fetch(proxyUrl + encodedUrl, {
@@ -147,13 +144,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!response.ok) throw new Error(`Ошибка при отправке данных: ${await response.text()}`);
 
-        showThankYou(); // Показываем спасибо-экран после успешной отправки
+        showThankYou(); 
       } catch (error) {
         alert('Произошла ошибка при отправке данных.');
         console.error(error.message);
       }
     });
 
-    // GSAP нужен для красивой анимации конверта. Подключите его в head:
-    // <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 });
