@@ -112,7 +112,7 @@ rsvpForm.addEventListener('submit', async function(event) {
     try {
         // Отправляем данные по адресу веб-приложения Apps Script
         const response = await fetch(
-            'https://script.google.com/macros/s/AKfycby7X3RAqH37QT1jitLjeSxmWL7ix_EtkxpapCFHWBRErr9BwftHUY17oR-BijGig24h/exec', // Обязательно вставьте сюда свой URL из развёртывания Apps Script!
+            'https://script.google.com/macros/s/AKfycbwTU-vm2jdiLel95ybyuzBJlWHptfoc1wif7bpnaa1k-7BT_zqZpnGo8ypYkHM_h_rY/exec', // Обязательно вставьте сюда свой URL из развёртывания Apps Script!
             { method: 'POST', body: JSON.stringify(dataToSend), headers: {'Content-Type': 'application/json'} }
         );
         
