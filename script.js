@@ -112,7 +112,7 @@ rsvpForm.addEventListener('submit', async function(event) {
     try {
         // Отправляем данные по адресу веб-приложения Apps Script
         const response = await fetch(
-            'ВАШ_АДРЕС_EXEC', // Обязательно вставьте сюда свой URL из развёртывания Apps Script!
+            'https://script.google.com/macros/s/AKfycby7X3RAqH37QT1jitLjeSxmWL7ix_EtkxpapCFHWBRErr9BwftHUY17oR-BijGig24h/exec', // Обязательно вставьте сюда свой URL из развёртывания Apps Script!
             { method: 'POST', body: JSON.stringify(dataToSend), headers: {'Content-Type': 'application/json'} }
         );
         
