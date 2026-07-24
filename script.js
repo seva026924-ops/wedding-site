@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
         // Отправляем данные по адресу веб-приложения Apps Script
         const response = await fetch(
-            'https://script.google.com/macros/s/AKfycbwmfximm7l4T8eiBZxF0_q_F05B6eYEfJ16MG9MVUrteRqtdC1jNWvc2pXbIUyUXOcD/exec',
+            'https://script.google.com/macros/s/AKfycbyrMZQV8izcaqondFSePjSK6dDm2FJ386-hQ5ymOPmYhm6eHmZYmFVi2aY3lEeLM8I/exec',
             { method: 'POST', body: JSON.stringify(dataToSend), headers: {'Content-Type': 'application/json'} }
         );
         
