@@ -30,7 +30,7 @@ width: 85%;
 .photo-bg {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-image: url('/main-bg.jpg');
+    background-image: url('/main-bg.jpeg');
     background-size: cover;
     background-position: center;
     filter: blur(10px) brightness(0.6);
