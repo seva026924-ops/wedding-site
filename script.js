@@ -81,15 +81,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function calcRoute(type) {
-        let destination;
-        if (type === 'ЗАГС') {
-            destination = 'Московский проспект, 38/5';
-        } else {
-            destination = 'Ярославская улица, 29';
-        }
-        // Это откроет приложение карт пользователя
-        window.location.href = `yandexnavi://build_route_on_map?lat_to=56.1365&lon_to=47.2395&name_to=${destination}`;
+    // Определяем координаты точки назначения
+    let lat, lon;
+    
+    if (type === 'ЗАГС') {
+        [lat, lon] = [56.146289, 47.216639]; // Координаты ЗАГСа из нашего чата
+    } else if (type === 'Банкет') { // Важно: тип должен совпадать с onclick!
+        [lat, lon] = [56.141893, 47.253355]; // Координаты банкетного зала
     }
+
+    // Формируем универсальную ссылку Deep Link
+    const url = `https://maps.yandex.ru/?ll=${lon},${lat}&z=16&pt=${lon},${lat}`;
+
+    // Пробуем открыть ссылку через нативные приложения
+    window.location.href = url;
+}
 
     // === RSVP ФОРМА ===
     const rsvpForm = document.getElementById('rsvp-form');
