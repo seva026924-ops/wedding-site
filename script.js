@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-
     // === ОТКРЫТИЕ КОНВЕРТА ===
     const envelope = document.querySelector('.envelope');
     const seal = document.querySelector('.seal');
@@ -14,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mainScreen.classList.add('hidden');
             wrapper.classList.remove('hidden');
             music.play();
-            animateOnScroll(); // Запускаем проверку видимости элементов
+            animateOnScroll(); 
         }});
     }
 
@@ -71,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Метка Банкета
-        const placemarkBanquet = new ymaps.Placemark([56.141893, 47.253355], { // Координаты Ярославской 29 примерные
+        const placemarkBanquet = new ymaps.Placemark([56.141893, 47.253355], {
             balloonContentHeader: 'Банкетный зал "Мелодия"',
             balloonContentBody: 'Ярославская ул., 29'
         });
@@ -81,73 +80,74 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function calcRoute(type) {
-    // Определяем координаты точки назначения
-    let lat, lon;
-    
-    if (type === 'ЗАГС') {
-        [lat, lon] = [56.146289, 47.216639]; // Координаты ЗАГСа из нашего чата
-    } else if (type === 'Банкет') { // Важно: тип должен совпадать с onclick!
-        [lat, lon] = [56.141893, 47.253355]; // Координаты банкетного зала
+        let lat, lon;
+        
+        if (type === 'ЗАГС') {
+            [lat, lon] = [56.146289, 47.216639];
+        } else if (type === 'Банкет') {
+            [lat, lon] = [56.141893, 47.253355];
+        }
+
+        const url = `https://maps.yandex.ru/?ll=${lon},${lat}&z=16&pt=${lon},${lat}`;
+        window.location.href = url;
     }
-
-    // Формируем универсальную ссылку Deep Link
-    const url = `https://maps.yandex.ru/?ll=${lon},${lat}&z=16&pt=${lon},${lat}`;
-
-    // Пробуем открыть ссылку через нативные приложения
-    window.location.href = url;
-}
 
     // === RSVP ФОРМА ===
-  rsvpForm.addEventListener('submit', async function(event) {
-    event.preventDefault(); // Отменяем стандартную отправку формы
+    // Объявляем форму здесь!
+    const rsvpForm = document.getElementById('rsvp-form'); // <-- Добавил эту строку
 
-    const formData = new FormData(rsvpForm); // Собираем все поля формы
-    
-    // Формируем объект данных для передачи
-    const dataToSend = {
-        name: formData.get('name'),          // Имя гостя
-        attendance: formData.get('attendance'),// Будет присутствовать?
-        transfer: formData.get('transfer'),   // Нужен ли трансфер?
-        children: formData.get('children'),    // Будет ли ребенок?
-        allergy: formData.get('allergy'),     // Аллергии / предпочтения в еде
-        alcohol: formData.get('alcohol'),     // Какой алкоголь предпочитаете?
-        comment: formData.get('comment')      // Комментарий
-    };
+    rsvpForm.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Отменяем стандартную отправку формы
 
-    try {
-        // Отправляем данные по адресу веб-приложения Apps Script
-        const response = await fetch(
-            'https://script.google.com/macros/s/AKfycbyrMZQV8izcaqondFSePjSK6dDm2FJ386-hQ5ymOPmYhm6eHmZYmFVi2aY3lEeLM8I/exec',
-            { method: 'POST', body: JSON.stringify(dataToSend), headers: {'Content-Type': 'application/json'} }
-        );
+        const formData = new FormData(rsvpForm); // Собираем все поля формы
         
-        if (!response.ok) throw new Error(`Ошибка при отправке данных: ${await response.text()}`);
+        // Формируем объект данных для передачи
+        const dataToSend = {
+            name: formData.get('name'),          // Имя гостя
+            attendance: formData.get('attendance'),// Будет присутствовать?
+            transfer: formData.get('transfer'),   // Нужен ли трансфер?
+            children: formData.get('children'),    // Будет ли ребенок?
+            allergy: formData.get('allergy'),     // Аллергии / предпочтения в еде
+            alcohol: formData.get('alcohol'),     // Какой алкоголь предпочитаете?
+            comment: formData.get('comment')      // Комментарий
+        };
 
-        showThankYou(); // Показываем спасибо-экран после успешной отправки
-    } catch (error) {
-        alert('Произошла ошибка при отправке данных. Попробуйте ещё раз позже.');
-        console.error(error.message);
-    }
-});
+        try {
+            // Отправляем данные по адресу веб-приложения Apps Script
+            const response = await fetch(
+                'ВАШ_АДРЕС_EXEC', // Не забудь вставить свой URL из развёртывания Apps Script
+                { method: 'POST', body: JSON.stringify(dataToSend), headers: {'Content-Type': 'application/json'} }
+            );
+            
+            if (!response.ok) throw new Error(`Ошибка при отправке данных: ${await response.text()}`);
 
+            showThankYou(); // Показываем спасибо-экран после успешной отправки
+        } catch (error) {
+            alert('Произошла ошибка при отправке данных.');
+            console.error(error.message);
+        }
+    });
+
+    // Функция благодарности тоже должна быть здесь
     function showThankYou() {
-    const modal = document.createElement('div');
-    modal.className = 'thank-you-modal';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <i class="fa-solid fa-heart"></i>
-            <h2>Спасибо!</h2>
-            <p>До встречи<br>19 сентября 2026 ❤️</p>
-        </div>
-    `;
-    document.body.appendChild(modal);
-    setTimeout(() => modal.classList.add('active'), 100); // Плавное появление
-    setTimeout(() => { // Через 3 секунды плавно скрываем окно
-        modal.classList.remove('active');
-        setTimeout(() => modal.remove(), 400); // И удаляем его через полсекунды после исчезновения
-    }, 3000);
-}
+        const modal = document.createElement('div');
+        modal.className = 'thank-you-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <i class="fa-solid fa-heart"></i>
+                <h2>Спасибо!</h2>
+                <p>До встречи<br>19 сентября 2026 ❤️</p>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        setTimeout(() => modal.classList.add('active'), 100); // Плавное появление
+        setTimeout(() => { // Через 3 секунды плавно скрываем окно
+            modal.classList.remove('active');
+            setTimeout(() => modal.remove(), 400); // И удаляем его через полсекунды после исчезновения
+        }, 3000);
+    }
 
     // GSAP нужен для красивой анимации конверта. Подключите его в head:
     // <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 });
+
