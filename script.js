@@ -115,7 +115,7 @@ rsvpForm.addEventListener('submit', async function(event) {
     // Используем бесплатный прокси-сервис для обхода CORS
     const proxyUrl = "https://cors-anywhere.herokuapp.com/";
     
-    const response = await fetch(proxyUrl + 'ВАШ_АДРЕС_EXEC', {
+    const response = await fetch(proxyUrl + 'https://script.google.com/macros/s/AKfycbzmFp7MQ8hVn0h-o4l8XUtfOHFGKM0dC83brpmW3tP6qklqH9sjleCaLEclHkEbNT7X/exec', {
       method: 'POST',
       body: JSON.stringify(dataToSend),
       headers: {'Content-Type': 'application/json'}
