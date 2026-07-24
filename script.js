@@ -98,16 +98,37 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
     // === RSVP ФОРМА ===
-    const rsvpForm = document.getElementById('rsvp-form');
-    rsvpForm.addEventListener('submit', function(e){
-        e.preventDefault();
+  rsvpForm.addEventListener('submit', async function(event) {
+    event.preventDefault(); // Отменяем стандартную отправку формы
+
+    const formData = new FormData(rsvpForm); // Собираем все поля формы
+    
+    // Формируем объект данных для передачи
+    const dataToSend = {
+        name: formData.get('name'),          // Имя гостя
+        attendance: formData.get('attendance'),// Будет присутствовать?
+        transfer: formData.get('transfer'),   // Нужен ли трансфер?
+        children: formData.get('children'),    // Будет ли ребенок?
+        allergy: formData.get('allergy'),     // Аллергии / предпочтения в еде
+        alcohol: formData.get('alcohol'),     // Какой алкоголь предпочитаете?
+        comment: formData.get('comment')      // Комментарий
+    };
+
+    try {
+        // Отправляем данные по адресу веб-приложения Apps Script
+        const response = await fetch(
+            'https://script.google.com/macros/s/AKfycbwmfximm7l4T8eiBZxF0_q_F05B6eYEfJ16MG9MVUrteRqtdC1jNWvc2pXbIUyUXOcD/exec',
+            { method: 'POST', body: JSON.stringify(dataToSend), headers: {'Content-Type': 'application/json'} }
+        );
         
-        // Здесь можно отправить данные на почту или в Google Таблицы (через fetch/AJAX)
-        console.log('Данные отправлены:', Object.fromEntries(new FormData(rsvpForm)));
-        
-        // Показываем спасибо-экран
-        showThankYou();
-    });
+        if (!response.ok) throw new Error(`Ошибка при отправке данных: ${await response.text()}`);
+
+        showThankYou(); // Показываем спасибо-экран после успешной отправки
+    } catch (error) {
+        alert('Произошла ошибка при отправке данных. Попробуйте ещё раз позже.');
+        console.error(error.message);
+    }
+});
 
     function showThankYou() {
         const modal = document.createElement('div');
